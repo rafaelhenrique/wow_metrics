@@ -19,7 +19,7 @@ defmodule WowMetricsTest do
       "USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8",
       %{
         "access_token" => "USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8",
-        "expires_in" => 86399,
+        "expires_in" => 86_399,
         "token_type" => "bearer"
       }
     }
