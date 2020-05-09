@@ -12,15 +12,15 @@ defmodule WowMetricsTest do
         %HTTPoison.Response{
           status_code: 200,
           body:
-            "{\"access_token\":\"USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8\",\"token_type\":\"bearer\",\"expires_in\":86399}"
+            "{\"access_token\":\"aSDFasdf6asdf123asdfasdfASDFqwerty\",\"token_type\":\"bearer\",\"expires_in\":86399}"
         }
       end)
 
       assert WowMetrics.oauth_token() == {
                :ok,
-               "USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8",
+               "aSDFasdf6asdf123asdfasdfASDFqwerty",
                %{
-                 "access_token" => "USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8",
+                 "access_token" => "aSDFasdf6asdf123asdfasdfASDFqwerty",
                  "expires_in" => 86_399,
                  "token_type" => "bearer"
                }
@@ -56,9 +56,9 @@ defmodule WowMetricsTest do
     }
     @token {
       :ok,
-      "USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8",
+      "aSDFasdf6asdf123asdfasdfASDFqwerty",
       %{
-        "access_token" => "USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8",
+        "access_token" => "aSDFasdf6asdf123asdfasdfASDFqwerty",
         "expires_in" => 86_399,
         "token_type" => "bearer"
       }
@@ -129,9 +129,9 @@ defmodule WowMetricsTest do
     ]
     @token {
       :ok,
-      "USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8",
+      "aSDFasdf6asdf123asdfasdfASDFqwerty",
       %{
-        "access_token" => "USvegdNo6SNVonaLG28O3tSYYVXfMu1hG8",
+        "access_token" => "aSDFasdf6asdf123asdfasdfASDFqwerty",
         "expires_in" => 86_399,
         "token_type" => "bearer"
       }
