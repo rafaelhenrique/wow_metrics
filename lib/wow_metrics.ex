@@ -4,7 +4,6 @@ defmodule WowMetrics do
   """
   @http_adapter Application.get_env(:wow_metrics, :http_adapter)
 
-
   @doc """
     Returns a tuple with access token or with error.
 
@@ -32,6 +31,22 @@ defmodule WowMetrics do
         {:ok, access_token, Jason.decode!(body)}
       %HTTPoison.Response{body: body} ->
         {:error, nil, Jason.decode!(body)}
+    end
+  end
+
+  def statistics(
+        {:ok, access_token, _},
+        %{region: region, realm: realm, character_name: character_name, namespace: namespace, locale: locale}
+      ) do
+
+    # TODO: Remove this url from here and move to config
+    url = "https://#{region}.api.blizzard.com/profile/wow/character/#{realm}/#{character_name}/statistics?namespace=#{namespace}&locale=#{locale}&access_token=#{access_token}"
+    headers = ["Authorization": "Bearer #{access_token}"]
+    case @http_adapter.get!(url, headers) do
+      %HTTPoison.Response{status_code: 200, body: body} ->
+        {:ok, Jason.decode!(body)}
+      %HTTPoison.Response{body: body} ->
+        {:error, Jason.decode!(body)}
     end
   end
 
