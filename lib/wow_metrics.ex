@@ -50,4 +50,25 @@ defmodule WowMetrics do
     end
   end
 
+  def players_statistics(token, players) do
+    Enum.map(players, fn(player) ->
+      token
+      |> WowMetrics.statistics(player)
+      |> player_to_map
+    end)
+  end
+
+  defp player_to_map({:ok, body}) do
+    %{"corruption" => corruption} = body
+    %{"effective_corruption" => effective_corruption} = corruption
+    %{"character" => character} = body
+    %{"name" => name} = character
+
+    %WowMetrics.Player{name: name, effective_corruption: effective_corruption}
+  end
+
+  defp player_to_map({:error, body}) do
+    IO.inspect(body)
+  end
+
 end
