@@ -94,75 +94,72 @@ defmodule WowMetrics do
   end
 
   def main() do
-    token = WowMetrics.oauth_token()
-
-    players =
-      players_statistics(token, [
-        %{
-          locale: "en_US",
-          region: "us",
-          namespace: "profile-us",
-          realm: "tichondrius",
-          character_name: "nikolei"
-        },
-        %{
-          locale: "en_US",
-          region: "us",
-          namespace: "profile-us",
-          realm: "illidan",
-          character_name: "junkratxd"
-        },
-        %{
-          locale: "en_US",
-          region: "us",
-          namespace: "profile-us",
-          realm: "area-52",
-          character_name: "ohnut"
-        },
-        %{
-          locale: "en_US",
-          region: "eu",
-          namespace: "profile-eu",
-          realm: "ysondre",
-          character_name: "kreay"
-        },
-        %{
-          locale: "en_US",
-          region: "eu",
-          namespace: "profile-eu",
-          realm: "tarren-mill",
-          character_name: "álanis"
-        },
-        %{
-          locale: "en_US",
-          region: "eu",
-          namespace: "profile-eu",
-          realm: "hyjal",
-          character_name: "lekträh"
-        },
-        %{
-          locale: "en_US",
-          region: "eu",
-          namespace: "profile-eu",
-          realm: "howling-fjord",
-          character_name: "ловайкъю"
-        },
-        %{
-          locale: "en_US",
-          region: "eu",
-          namespace: "profile-eu",
-          realm: "blackhand",
-          character_name: "seliandrá"
-        },
-        %{
-          locale: "en_US",
-          region: "eu",
-          namespace: "profile-eu",
-          realm: "twisting-nether",
-          character_name: "trxë"
-        }
-      ])
-
-    calculate_effective_corruption_mean(players)
+    WowMetrics.oauth_token()
+    |> players_statistics([
+      %{
+        locale: "en_US",
+        region: "us",
+        namespace: "profile-us",
+        realm: "tichondrius",
+        character_name: "nikolei"
+      },
+      %{
+        locale: "en_US",
+        region: "us",
+        namespace: "profile-us",
+        realm: "illidan",
+        character_name: "junkratxd"
+      },
+      %{
+        locale: "en_US",
+        region: "us",
+        namespace: "profile-us",
+        realm: "area-52",
+        character_name: "ohnut"
+      },
+      %{
+        locale: "en_US",
+        region: "eu",
+        namespace: "profile-eu",
+        realm: "ysondre",
+        character_name: "kreay"
+      },
+      %{
+        locale: "en_US",
+        region: "eu",
+        namespace: "profile-eu",
+        realm: "tarren-mill",
+        character_name: "álanis"
+      },
+      %{
+        locale: "en_US",
+        region: "eu",
+        namespace: "profile-eu",
+        realm: "hyjal",
+        character_name: "lekträh"
+      },
+      %{
+        locale: "en_US",
+        region: "eu",
+        namespace: "profile-eu",
+        realm: "howling-fjord",
+        character_name: "ловайкъю"
+      },
+      %{
+        locale: "en_US",
+        region: "eu",
+        namespace: "profile-eu",
+        realm: "blackhand",
+        character_name: "seliandrá"
+      },
+      %{
+        locale: "en_US",
+        region: "eu",
+        namespace: "profile-eu",
+        realm: "twisting-nether",
+        character_name: "trxë"
+      }
+    ])
+    |> calculate_effective_corruption_mean
   end
 end
