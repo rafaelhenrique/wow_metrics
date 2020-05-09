@@ -154,4 +154,15 @@ defmodule WowMetricsTest do
     end
   end
 
+  describe "calculate_effective_corruption_mean" do
+    @players [
+      %WowMetrics.Player{effective_corruption: 123.0, name: "Nikolei"},
+      %WowMetrics.Player{effective_corruption: 456.0, name: "Junkratxd"},
+      %WowMetrics.Player{effective_corruption: 789.0, name: "Faölin"}
+    ]
+
+    test "calculate_effective_corruption_mean needs calculate mean of effective corruption correctly" do
+      assert WowMetrics.calculate_effective_corruption_mean(@players) == 456.0
+    end
+  end
 end

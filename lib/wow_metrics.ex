@@ -68,7 +68,14 @@ defmodule WowMetrics do
   end
 
   defp player_to_map({:error, body}) do
-    IO.inspect(body)
+    body
   end
 
+  def calculate_effective_corruption_mean(players) do
+    corruption_total = Enum.reduce(players, 0, fn %WowMetrics.Player{effective_corruption: effective_corruption}, acc ->
+      effective_corruption + acc
+    end)
+
+    corruption_total / length(players)
+  end
 end
