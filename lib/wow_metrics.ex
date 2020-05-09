@@ -23,12 +23,13 @@ defmodule WowMetrics do
     url = Application.fetch_env!(:wow_metrics, :oauth_url)
 
     access_token = "#{client_id}:#{client_secret}" |> Base.encode64()
-    headers = ["Authorization": "Basic #{access_token}"]
+    headers = [Authorization: "Basic #{access_token}"]
 
     case @http_adapter.get!(url, headers) do
       %HTTPoison.Response{status_code: 200, body: body} ->
         %{"access_token" => access_token} = Jason.decode!(body)
         {:ok, access_token, Jason.decode!(body)}
+
       %HTTPoison.Response{body: body} ->
         {:error, nil, Jason.decode!(body)}
     end
@@ -36,22 +37,33 @@ defmodule WowMetrics do
 
   def statistics(
         {:ok, access_token, _},
-        %{region: region, realm: realm, character_name: character_name, namespace: namespace, locale: locale}
+        %{
+          region: region,
+          realm: realm,
+          character_name: character_name,
+          namespace: namespace,
+          locale: locale
+        }
       ) do
-
     # TODO: Remove this url from here and move to config
-    url = "https://#{region}.api.blizzard.com/profile/wow/character/#{realm}/#{character_name}/statistics?namespace=#{namespace}&locale=#{locale}&access_token=#{access_token}"
-    headers = ["Authorization": "Bearer #{access_token}"]
+    url =
+      "https://#{region}.api.blizzard.com/profile/wow/character/#{realm}/#{character_name}/statistics?namespace=#{
+        namespace
+      }&locale=#{locale}&access_token=#{access_token}"
+
+    headers = [Authorization: "Bearer #{access_token}"]
+
     case @http_adapter.get!(url, headers) do
       %HTTPoison.Response{status_code: 200, body: body} ->
         {:ok, Jason.decode!(body)}
+
       %HTTPoison.Response{body: body} ->
         {:error, Jason.decode!(body)}
     end
   end
 
   def players_statistics(token, players) do
-    Enum.map(players, fn(player) ->
+    Enum.map(players, fn player ->
       token
       |> WowMetrics.statistics(player)
       |> player_to_map
@@ -72,9 +84,11 @@ defmodule WowMetrics do
   end
 
   def calculate_effective_corruption_mean(players) do
-    corruption_total = Enum.reduce(players, 0, fn %WowMetrics.Player{effective_corruption: effective_corruption}, acc ->
-      effective_corruption + acc
-    end)
+    corruption_total =
+      Enum.reduce(players, 0, fn %WowMetrics.Player{effective_corruption: effective_corruption},
+                                 acc ->
+        effective_corruption + acc
+      end)
 
     corruption_total / length(players)
   end
